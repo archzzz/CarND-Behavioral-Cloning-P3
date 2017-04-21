@@ -1,10 +1,9 @@
 import csv
 import cv2
 import numpy as np
-import random
 
 path = "./data"
-folders = ["/dust", "/rec_left", "/rec_l2c", "/rec_right", "/rec_r2c", "/left_full_2", "/right_full_2", "/sharp_turns"]
+folders = ["/dust", "/dust_road", "/left", "/rec_right", "/rec_r2c", "/left_full_2", "/right_full_2", "/sharp_turns"]
 
 
 images = []
@@ -48,6 +47,7 @@ model.add(Convolution2D(48,5,5,subsample=(2,2),activation="relu"))
 model.add(Convolution2D(64,3,3,activation="relu"))
 model.add(Convolution2D(64,3,3,activation="relu"))
 model.add(Flatten())
+model.add(Dropout(0.5))
 model.add(Dense(100))
 model.add(Dense(50))
 model.add(Dense(10))
@@ -57,4 +57,3 @@ model.compile(optimizer='adam', loss='mse')
 
 model.fit(X_train, y_train, validation_split=0.2, nb_epoch=5, shuffle=True)
 model.save('model.h5')
-
