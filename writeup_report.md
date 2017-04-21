@@ -49,9 +49,9 @@ The model.py file contains the code for training and saving the convolution neur
 
 ####1. An appropriate model architecture has been employed
 
-My model consists of a convolution neural network with 3x3 filter sizes and depths between 32 and 128 (model.py lines 18-24) 
+My model consists of a convolution neural network with 5x5 filter and 3x3 filter sizes and depths between 32 and 128 (model.py lines 44-48) 
 
-The model includes RELU layers to introduce nonlinearity (code line 20), and the data is normalized in the model using a Keras lambda layer (code line 18). 
+The model includes RELU layers to introduce nonlinearity (code line 44-48), and the data is normalized in the model using a Keras lambda layer (code line 43) and corpping layer(code line 42). 
 
 ####2. Attempts to reduce overfitting in the model
 
@@ -61,7 +61,7 @@ The model was trained and validated on different data sets to ensure that the mo
 
 ####3. Model parameter tuning
 
-The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 25).
+The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 50).
 
 ####4. Appropriate training data
 
@@ -89,7 +89,7 @@ At the end of the process, the vehicle is able to drive autonomously around the 
 
 ####2. Final Model Architecture
 
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes: 
+The final model architecture (model.py lines 42-54) consisted of a convolution neural network with the following layers and layer sizes: 
 1. 5 convolution layers from 24 to 64, with filter size 5*5 and 3*3
 2. 4 fully connection layers, reducing output to 1
 3. 1 dropout layers that keeps 50% data.
@@ -124,6 +124,6 @@ After the collection process, I had 7225 number of data points. I then preproces
 2. filtered out all image that measurement is 0.0.
 
 
-I finally randomly shuffled the data set and put 20% of the data into a validation set. 
+I finally randomly shuffled the data set and put 20% of the data into a validation set. Training loss and validation loss is between 0.03 and 0.04
 
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
+I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 5 as evidenced by training loss and validation is close. I used an adam optimizer so that manually training the learning rate wasn't necessary.
