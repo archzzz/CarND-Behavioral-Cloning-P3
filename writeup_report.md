@@ -121,7 +121,7 @@ To train the car not to drive on dust road, i also recorded recovering from dust
 
 After the collection process, I had 7225 number of data points. I then preprocessed this data by:
 1. clip upper half of the image since it's not useful to the driver and will add more noise to data
-2. filtered out all image that measurement is 0.0.
+2. filtered out all image that measurement is 0.0. Since about 75% of images are 0.0, the car tends to make small turns and is not able to pass sharp turns. Removing 0.0 images has negative effect of shaking on straight road. Maybe using mouse to control the car will give better result since the measurement changing is continous.
 
 
 I finally randomly shuffled the data set and put 20% of the data into a validation set. Training loss and validation loss is between 0.03 and 0.04
