@@ -1,8 +1,3 @@
-#**Behavioral Cloning** 
-
-##Writeup Template
-
-###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
 
 ---
 
@@ -18,13 +13,13 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/placeholder.png "Model Visualization"
-[image2]: ./examples/placeholder.png "Grayscaling"
-[image3]: ./examples/placeholder_small.png "Recovery Image"
-[image4]: ./examples/placeholder_small.png "Recovery Image"
-[image5]: ./examples/placeholder_small.png "Recovery Image"
-[image6]: ./examples/placeholder_small.png "Normal Image"
-[image7]: ./examples/placeholder_small.png "Flipped Image"
+[image1]: ./examples/dust.png "dust road"
+[image2]: ./examples/center.png "center"
+[image3]: ./examples/left_1.png "Recovery Image"
+[image4]: ./examples/left_2.png "Recovery Image"
+[image5]: ./examples/left_3.png "Recovery Image"
+[image6]: ./examples/center.png "Normal Image"
+[image7]: ./examples/center_flip.png "Flipped Image"
 
 ## Rubric Points
 ###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
@@ -70,7 +65,7 @@ The model used an adam optimizer, so the learning rate was not tuned manually (m
 
 ####4. Appropriate training data
 
-Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road ... 
+Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road on both straight and curve road, and recovering from dust road.
 
 For details about how I created the training data, see the next section. 
 
@@ -78,27 +73,28 @@ For details about how I created the training data, see the next section.
 
 ####1. Solution Design Approach
 
-The overall strategy for deriving a model architecture was to ...
+The overall strategy for deriving a model architecture was to use deep neural network that has image pre-processing layers, convolution layers, dropout, flatten and fully connected layers with number of output class 1.
 
-My first step was to use a convolution neural network model similar to the ... I thought this model might be appropriate because ...
+My first step was to use a convolution neural network model similar to the NVIDIA modal I thought this model might be appropriate because it's a widely used model, it has 5 convolution layer to learn about the image and 4 fully connected layer to learn the measurement.
 
 In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
 
-To combat the overfitting, I modified the model so that ...
+To combat the overfitting, I modified the model so that 1 dropout layers are added 
 
-Then I ... 
+Then I increase epoch to 5. Since my data is not big, one dropout(or no dropout layer) and a small epoch is enough. More dropout requires larger epoch, it takes time and the outcome is not improved much. About 7000 images is enough for a simple trail like the left trail. I didn't train the right trail, to make the car drive one the right, it make sence to gather more data, add more dropout layers and use larger epoch.
 
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
+The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track at sharp turns, the connection point of bridge and road. The car also leans left on long straight road. To improve the driving behavior in these cases, I collect more recovery data at failure points.
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
 
 ####2. Final Model Architecture
 
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes ...
+The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes: 
+1. 5 convolution layers from 24 to 64, with filter size 5*5 and 3*3
+2. 4 fully connection layers, reducing output to 1
+3. 1 dropout layers that keeps 50% data.
 
-Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
-
-![alt text][image1]
+I tried to visualize the model using keras's plot model and grahper, but cannot find the right version and class to import. Will do more research in the futuer
 
 ####3. Creation of the Training Set & Training Process
 
@@ -106,7 +102,7 @@ To capture good driving behavior, I first recorded two laps on track one using c
 
 ![alt text][image2]
 
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
+I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to pull back when it start driving off the road. These images show what a recovery looks like starting from left/right side of the road, pull it back to center and drive straight for a while :
 
 ![alt text][image3]
 ![alt text][image4]
@@ -119,11 +115,15 @@ To augment the data sat, I also flipped images and angles thinking that this wou
 ![alt text][image6]
 ![alt text][image7]
 
-Etc ....
+To train the car not to drive on dust road, i also recorded recovering from dust road. Images look like:
+![alt text][image1]
 
-After the collection process, I had X number of data points. I then preprocessed this data by ...
+
+After the collection process, I had 7225 number of data points. I then preprocessed this data by:
+1. clip upper half of the image since it's not useful to the driver and will add more noise to data
+2. filtered out all image that measurement is 0.0.
 
 
-I finally randomly shuffled the data set and put Y% of the data into a validation set. 
+I finally randomly shuffled the data set and put 20% of the data into a validation set. 
 
 I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
