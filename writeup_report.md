@@ -13,13 +13,13 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/dust.png "dust road"
-[image2]: ./examples/center.png "center"
-[image3]: ./examples/left_1.png "Recovery Image"
-[image4]: ./examples/left_2.png "Recovery Image"
-[image5]: ./examples/left_3.png "Recovery Image"
-[image6]: ./examples/center.png "Normal Image"
-[image7]: ./examples/center_flip.png "Flipped Image"
+[image1]: ./examples/dust.jpg "dust road"
+[image2]: ./examples/center.jpg "center"
+[image3]: ./examples/left_1.jpg "Recovery Image"
+[image4]: ./examples/left_2.jpg "Recovery Image"
+[image5]: ./examples/left_3.jpg "Recovery Image"
+[image6]: ./examples/center.jpg "Normal Image"
+[image7]: ./examples/center_flip.jpg "Flipped Image"
 
 ## Rubric Points
 ###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
